@@ -79,7 +79,7 @@ public class Constants {
 	
 	public static final String CONFIGLOGFILE = System.getProperty("user.dir")+"/mmplugins/MicroRemote/config_Errorlog.txt";
 	public static final String PLUGINLOGFILE = System.getProperty("user.dir")+"/mmplugins/MicroRemote/main_Errorlog.txt";
-	public static final String ICONPATH = "ic_launcher.png";
+	public static final String ICONPATH = "icon.png";
 	
 	private static final Random RANDOM = new Random();
 	public static final long QRENCODER = System.currentTimeMillis()/Math.abs(1000+(RANDOM.nextInt()/5));

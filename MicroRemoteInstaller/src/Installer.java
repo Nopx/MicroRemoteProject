@@ -82,7 +82,7 @@ public class Installer {
 		frmremoteInstaller.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmremoteInstaller.getContentPane().setLayout(null);
 		
-		InputStream imgStream = Installer.class.getResourceAsStream("ic_launcher.png");
+		InputStream imgStream = Installer.class.getResourceAsStream("icon.png");
 		BufferedImage img;
 		try {
 			img = ImageIO.read(imgStream);

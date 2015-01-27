@@ -88,7 +88,7 @@ public class MainWindow extends JFrame {
 		lblRunning.setBounds(106, 146, 46, 14);
 		contentPane.add(lblRunning);
 		
-		lblPort.setBounds(106, 55, 46, 14);
+		lblPort.setBounds(106, 55, 172, 14);
 		contentPane.add(lblPort);
 		
 		lblCurrentPort.setBounds(10, 55, 86, 14);

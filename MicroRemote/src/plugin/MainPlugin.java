@@ -65,15 +65,15 @@ public class MainPlugin implements MMPlugin {
 	private HashMap<String, String> lastConfiguration = new HashMap<String, String>();
 
 	public void setApp(ScriptInterface app) {
+		if (logWindow == null)
+			logWindow = new ArdWindow();
+		logWindow.setVisible(Constants.ISARDWINDOWVISIBLE);
 		if(StartChecker.requestStart(this.getClass().toString())){
 			LogStreamer.startStream(Constants.PLUGINLOGFILE);
 			gui_ = app;
 			core_ = app.getMMCore();
 			acq_ = ((MMStudio)gui_).getAcquisitionEngine();
 			ScriptInterfaceWrapper.initialize(gui_, core_);
-			if (logWindow == null)
-				logWindow = new ArdWindow();
-			logWindow.setVisible(Constants.ISARDWINDOWVISIBLE);
 			if(window == null || !window.isVisible()){
 				window = new MainWindow();
 				window.addWindowListener(new WindowAdapter(){
