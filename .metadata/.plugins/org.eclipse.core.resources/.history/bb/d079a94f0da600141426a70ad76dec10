@@ -1,0 +1,8 @@
+package global.meta;
+
+public interface ConfigGUIInterface {
+
+	public void apply();
+	public void setLastPressedBtn(String id);
+	
+}

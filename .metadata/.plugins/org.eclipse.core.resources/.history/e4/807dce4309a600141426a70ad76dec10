@@ -1,0 +1,22 @@
+package src.org.global.util;
+
+import java.util.Observable;
+
+abstract public class Driver extends Observable{
+	
+	abstract public void initialize();
+	abstract public void dispose();
+	
+	public Driver(){
+		//First message that isnt heard
+		omitMessage("");
+	}
+	
+	
+	protected void omitMessage(String msg){
+		notifyObservers(msg);
+		setChanged();
+	}
+	
+    
+}

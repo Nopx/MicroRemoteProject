@@ -1,0 +1,7 @@
+package global.meta;
+
+public interface DriverInterface {
+
+	public void initialize();
+	public void dispose();
+}

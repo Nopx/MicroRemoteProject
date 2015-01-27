@@ -1,0 +1,25 @@
+package src.org.global.util;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
+
+public class QRCodeGenerator {
+
+	private String text;
+	public QRCodeGenerator(String text){
+		this.text = text;
+	}
+	public BufferedImage getCodeAsImage(){
+		try {
+			return ImageIO.read(QRCode.from(text).to(ImageType.PNG).file());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+}
