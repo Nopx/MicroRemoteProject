@@ -8,9 +8,9 @@ All Instructions on MicroRemote can be found [here](mutterer.org/imaging)
 
 
 ------
-*Copyright belongs to Bernard Jollans 2015*
+*This project was made by Bernard Jollans in collaboration with the CNRS as a part of an internship 2014/2015*
 
-*Please redistribute whatever changes you make back to me aswell.*
+*Please redistribute whatever changes you make back to me -Bernard Jollans- aswell.*
 *I would be happy to see this projects development.*
 *You can contact me via:*
 *jollans94@googlemail.com*
