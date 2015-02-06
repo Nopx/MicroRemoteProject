@@ -287,7 +287,9 @@ public class MainPlugin implements MMPlugin {
 	
 	public void executeBsh(String script){
 		try {
+			System.setProperty("user.dir", Constants.BSHDIR);
 			interpreter.eval(script);
+			System.setProperty("user.dir", Constants.WORKINGDIR);
 		} catch (EvalError e) {
 			ArdWindow.print(e.getMessage()+"\n");
 			LogStreamer.write(e.getMessage());

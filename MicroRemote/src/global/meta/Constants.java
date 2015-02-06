@@ -19,6 +19,8 @@
 
 package global.meta;
 
+import global.util.PasswGen;
+
 import java.util.Random;
 
 public class Constants {
@@ -50,6 +52,8 @@ public class Constants {
 	public static final boolean ISARDWINDOWVISIBLE = false;
 	
 	public static final String CONFFILENAME = System.getProperty("user.dir")+"/mmplugins/MicroRemote/config";
+	public static final String WORKINGDIR = System.getProperty("user.dir");
+	public static final String BSHDIR = System.getProperty("user.dir")+"/plugins/Micro-Manager";
 
 	public static final String[] DRIVERLIST = {"Android","Arduino"};
 	
@@ -84,4 +88,8 @@ public class Constants {
 	private static final Random RANDOM = new Random();
 	public static final long QRENCODER = System.currentTimeMillis()/Math.abs(1000+(RANDOM.nextInt()/5));
 	public static final String QRSEPERATOR = ":";
+	
+	public static final int PASSWDLENGTH = 16;
+	public static String PASSWD = PasswGen.genPasswd(PASSWDLENGTH);
+	public static String INITVEC = PasswGen.genPasswd(16);
 }

@@ -33,6 +33,12 @@ abstract public class Driver extends Observable{
 	
 	
 	protected void omitMessage(String msg){
+		String[] msgArray = {msg};
+		notifyObservers(msgArray);
+		setChanged();
+	}
+	
+	protected void omitMessage(String[] msg){
 		notifyObservers(msg);
 		setChanged();
 	}

@@ -177,7 +177,7 @@ public class Configuration implements MMPlugin, Observer {
 		int buttonNR = -1;
 		String signal = "";
 		try {
-			signal = (String) signalObject;
+			signal = ((String[]) signalObject)[0];
 			buttonNR = Integer.parseInt(signal);
 				String btnID = Constants.IDPREFIX + buttonNR;
 				ArdWindow.println(btnID);

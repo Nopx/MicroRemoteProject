@@ -24,9 +24,7 @@ import global.util.ArdWindow;
 import global.util.FileHandler;
 import global.util.LogStreamer;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -96,7 +94,7 @@ public class Connector implements Observer {
 			int buttonNR = -1;
 			String signal = "";
 			try {
-				signal = (String) signalObject;
+				signal = ((String[])signalObject)[0];
 				buttonNR = Integer.parseInt(signal);
 				if(initTimeSaver+initTime > System.currentTimeMillis()){
 					blockedPins[buttonNR]++;
@@ -137,7 +135,7 @@ public class Connector implements Observer {
 				}
 				if(function.toLowerCase().equals(Constants.FUNCTIONSTRINGSCRIPT)){
 					File file =new File(args[2]);
-					String script = "";
+					/*String script = "";
 					try {
 						BufferedReader br = new BufferedReader(new FileReader(file));
 						String line = "";
@@ -148,7 +146,8 @@ public class Connector implements Observer {
 					} catch (Exception e) {
 						LogStreamer.write(e.getMessage() + "\n");
 					}
-					microManager.executeBsh(script);
+					microManager.executeBsh(script);*/
+					microManager.executeBsh("source("+file.getAbsolutePath()+");");
 				}
 				if (function.toLowerCase().equals(Constants.FUNCTIONSTRINGSHUTTER)) {
 					microManager.toggleShutter();

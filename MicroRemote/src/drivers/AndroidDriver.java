@@ -20,9 +20,9 @@
 package drivers;
 
 import global.meta.Constants;
+import global.util.CryptUtil;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.DataInputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,9 +33,11 @@ public class AndroidDriver extends global.util.Driver{
 	private ListenerThread listener;
 	ServerSocket serverSocket;
 	Socket clientSocket;
-	 BufferedReader in;
+	 DataInputStream in;
 	 PrintWriter out;
 	 boolean flag = true;
+	 private String acceptedIP; 
+	CryptUtil crypter = new CryptUtil(); 
 	
 	private class ListenerThread extends Thread{
 		private int portNumber;
@@ -48,23 +50,31 @@ public class AndroidDriver extends global.util.Driver{
 					listener = this;
 		            serverSocket =
 		                new ServerSocket(portNumber);
-		            clientSocket = serverSocket.accept();          
-		            in = new BufferedReader(
-		                new InputStreamReader(clientSocket.getInputStream()));
-		            out =
-			                new PrintWriter(clientSocket.getOutputStream(), true);  
-
-		            String inputLine= in.readLine();
-
-		            String[] codes = inputLine.split(Constants.QRSEPERATOR);
-		            long code = 0;
-		            try{
-		            	code = Integer.parseInt(codes[0]);
+		            clientSocket = serverSocket.accept();
+		            System.out.println(clientSocket.getInetAddress().toString());
+		            if(acceptedIP == null){
+		            	acceptedIP=clientSocket.getInetAddress().toString();
 		            }
-		            catch(Exception e){
-		            }
-		            if(code == Constants.QRENCODER && codes.length>1){		            	
-		            	omitMessage(codes[1]);
+		            if(acceptedIP.equals(clientSocket.getInetAddress().toString())){
+			            in = new DataInputStream(clientSocket.getInputStream());
+			            out =
+				                new PrintWriter(clientSocket.getOutputStream(), true);  
+	
+			            int length = in.readInt();
+			            byte[] bA = new byte[length];
+			            for(int i = 0; i < length; i++){
+			            	bA[i] = (byte)in.read();
+			            }
+			            String[] msg = new String[]{""};
+			            msg =(crypter.decrypt(bA)).split(Constants.QRSEPERATOR);
+			            try{
+			            	@SuppressWarnings("unused")
+							int x = Integer.parseInt(msg[0]);
+			            	omitMessage(msg[0]);
+			            }
+			            catch(Exception e){
+			            	//TODO Blacklist IP
+			            }
 		            }
 	            	end();
 	            	if(flag){
@@ -72,7 +82,7 @@ public class AndroidDriver extends global.util.Driver{
 		            	listener2.start();
 	            	}
 		        } catch (Exception e) {
-		        	
+		        	e.printStackTrace();
 		        }
 			return;
 		}

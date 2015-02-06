@@ -112,7 +112,9 @@ public class MainWindow extends JFrame {
 		}
 		else{
 			contentPane.remove(lblIP);
-			QRCodeGenerator qrg = new QRCodeGenerator(""+Constants.QRENCODER +Constants.QRSEPERATOR+ ip);
+			QRCodeGenerator qrg = new QRCodeGenerator(""+Constants.INITVEC+
+					Constants.QRSEPERATOR+Constants.PASSWD +
+					Constants.QRSEPERATOR+ ip);
 			lblIP = new JLabel(new ImageIcon(qrg.getCodeAsImage()));
 			lblIP.setBounds(106, 11, 190, 103);
 			lblIP.setVisible(true);
