@@ -37,11 +37,11 @@ public class AndroidDriver extends global.util.Driver{
 	 PrintWriter out;
 	 boolean flag = true;
 	 private String acceptedIP; 
-	CryptUtil crypter = new CryptUtil(); 
 	
 	private class ListenerThread extends Thread{
 		private int portNumber;
 		private ListenerThread listener2;
+		
 		public ListenerThread(int portNumber){
 			this.portNumber = portNumber;
 		}
@@ -62,10 +62,11 @@ public class AndroidDriver extends global.util.Driver{
 	
 			            int length = in.readInt();
 			            byte[] bA = new byte[length];
+			            String[] msg = new String[bA.length];
 			            for(int i = 0; i < length; i++){
 			            	bA[i] = (byte)in.read();
 			            }
-			            String[] msg = new String[]{""};
+			            CryptUtil crypter = new CryptUtil(); 
 			            msg =(crypter.decrypt(bA)).split(Constants.QRSEPERATOR);
 			            try{
 			            	@SuppressWarnings("unused")

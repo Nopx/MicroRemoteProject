@@ -11,7 +11,7 @@ public class PasswGen {
 		byte[] utf8RetBytes = new byte[length];
 		for(int i = 0; i <length; i++){
 			int random= rand.nextInt(126);
-			if((random < 32 && random > 0)||(random == 127)){
+			if((random < 32 && random > 0)||(random == 127)||(random == 58)){
 				i-=1;
 			}
 			else{

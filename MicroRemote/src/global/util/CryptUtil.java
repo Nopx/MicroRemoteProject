@@ -22,6 +22,14 @@ public class CryptUtil {
 	
 	public CryptUtil(){
 		byte[] keyBytes = Constants.PASSWD.getBytes();
+		ivParameterSpec = new IvParameterSpec(Constants.INITVEC.getBytes());
+		try{
+			ivParameterSpec = new IvParameterSpec(Constants.INITVEC.getBytes("UTF-8"));
+			keyBytes = Constants.PASSWD.getBytes("UTF-8");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		this.key = new SecretKeySpec(keyBytes,"AES");
 	}
 	
@@ -31,14 +39,14 @@ public class CryptUtil {
 		// Encrypt cipher
 		Cipher encryptCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		try {
-			encryptCipher.init(Cipher.ENCRYPT_MODE, key);
+			encryptCipher.init(Cipher.ENCRYPT_MODE, key,ivParameterSpec);
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		}
 	    // Encrypt
 	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 	    CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, encryptCipher);
-	    cipherOutputStream.write(s.getBytes());
+	    cipherOutputStream.write(s.getBytes("UTF-8"));
 	    cipherOutputStream.flush();
 	    cipherOutputStream.close();
 	    
@@ -72,14 +80,13 @@ public class CryptUtil {
 		    CipherInputStream ciphIn = new CipherInputStream(in, decr);
 		    byte[] buf = new byte[32];
 		    int bytesRead;
-		    while ((bytesRead = ciphIn.read(buf)) >= 0) {
+		    while ((bytesRead = ciphIn.read(buf)) >=0) {
 		        out.write(buf, 0, bytesRead);
 		    }
 		    ciphIn.close();
 		    out.close();
 		    in.close();
-		    
-		    return new String(out.toByteArray());
+		    return new String(out.toByteArray(),"UTF-8");
 
 		  } catch (Exception ex) {
 		    ex.printStackTrace();
