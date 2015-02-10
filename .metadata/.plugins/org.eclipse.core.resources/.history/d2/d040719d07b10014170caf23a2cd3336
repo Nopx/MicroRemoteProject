@@ -1,0 +1,31 @@
+package global.windows;
+
+import javax.swing.JOptionPane;
+
+public class ConfigOldHandler {
+
+	
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String args[]){
+		ConfigOldHandler cfgold = new ConfigOldHandler();
+		int returnval = JOptionPane.showConfirmDialog(null, 
+				"Your configuration file does not fit your connected hardware. "
+				+ "\n Do you want to save your old configuration to a different file?"
+				+ "\n \n Pressing \"No\" will let you overwrite your old config file.",
+				"Old Configuration",
+				JOptionPane.YES_NO_OPTION);
+		System.out.println(""+returnval);
+		
+	}
+	
+	public void doConfigOldPopUp(){
+		int returnval = JOptionPane.showConfirmDialog(null, 
+				"Your configuration file does not fit your connected hardware. "
+				+ "\n Do you want to save your old configuration to a different file?"
+				+ "\n \n Pressing \"No\" will let you overwrite your old config file.",
+				"Old Configuration",
+				JOptionPane.OK_CANCEL_OPTION);
+		System.out.println(""+returnval);
+	}
+}

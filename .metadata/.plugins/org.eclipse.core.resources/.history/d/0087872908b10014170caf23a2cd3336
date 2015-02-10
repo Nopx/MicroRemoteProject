@@ -1,0 +1,26 @@
+package global.windows;
+
+import javax.swing.JOptionPane;
+
+public class ConfigOldHandler {
+
+	
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String args[]){
+
+		int returnval = JOptionPane.showConfirmDialog(null, 
+				"Your configuration file does not fit your connected hardware. "
+				+ "\n Do you want to save your old configuration to a different file?"
+				+ "\n \n By pressing \"No\" you will overwrite your old config file.",
+				"Old Configuration Conflict",
+				JOptionPane.YES_NO_OPTION);
+		if(returnval == JOptionPane.YES_OPTION){
+			
+		}
+		
+	}
+	
+	public void doConfigOldPopUp(){
+	}
+}
