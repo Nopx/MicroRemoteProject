@@ -50,7 +50,6 @@ public class Connector implements Observer {
 	public Connector(MainPlugin mm) {
 		initTimeSaver = System.currentTimeMillis();
 		microManager = mm;
-		//TODO remove if ok
 //		reload();
 	}
 	
@@ -99,7 +98,10 @@ public class Connector implements Observer {
 	 * 3 Value
 	 */
 	public void update(Observable object, Object signalObject) {
-		if(map.isEmpty()){
+		String message = "1";
+		message = ((String[])signalObject)[0];
+		//If Message equals("") then that is the initial message that isnt heard. to start things
+		if(map.isEmpty() && !message.equals("")){
 			reload();
 		}
 		else{

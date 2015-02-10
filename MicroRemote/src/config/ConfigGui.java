@@ -86,6 +86,7 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 	JLabel[] lblDig;
 	JButton saveBtn;
 	JButton loadBtn;
+	boolean isLoading = false;
 	JButton addBtn;
 	JButton newBtn;
 	
@@ -382,6 +383,7 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					isLoading = true;
 					guiToMap();
 				}
 			}
@@ -597,80 +599,94 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 				pinLblList.get(sizeCounter).setText(""+key);
 				String[] mapString = map.get(key);
 				methodBoxDigList.get(sizeCounter).setSelectedIndex(Integer.parseInt(mapString[0]));
-				switch(Integer.parseInt(mapString[0])){
-					case Constants.CERTAINCHANNEL:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
-						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
-						if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						break;
-					case Constants.CERTAINPROP:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
-						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
-						if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						smValueFieldDigList.get(sizeCounter).setText(mapString[3]);		
-						break;
-					case Constants.CHANNELMINUS:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);	
-						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						break;
-					case Constants.CHANNELPLUS:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
-						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						break;
-					case Constants.FUNCTION:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
-						smValueFieldDigList.get(sizeCounter).setText(mapString[2]);
-						break;
-					case Constants.PROPSTEP:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
-						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
-							configOld = true;
-						}
-						propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
-						if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[2])){
-							configOld = true;
-						}
-						smValueFieldDigList.get(sizeCounter).setText(mapString[3]);
-						medValueFieldDigList.get(sizeCounter).setText(mapString[4]);
-						bigValueFieldDigList.get(sizeCounter).setText(mapString[5]);	
-						break;
+				try{
+					switch(Integer.parseInt(mapString[0])){
+						case Constants.CERTAINCHANNEL:
+							deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
+							if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+								configOld = true;
+							}
+							propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
+							if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[2])){
+								configOld = true;
+							}
+							break;
+						case Constants.CERTAINPROP:
+							deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
+							if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+								configOld = true;
+							}
+							propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
+							if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+								configOld = true;
+							}
+							smValueFieldDigList.get(sizeCounter).setText(mapString[3]);		
+							break;
+						case Constants.CHANNELMINUS:
+							deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);	
+							if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+								configOld = true;
+							}
+							break;
+						case Constants.CHANNELPLUS:
+							deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
+							if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+								configOld = true;
+							}
+							break;
+						case Constants.FUNCTION:
+							deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
+							smValueFieldDigList.get(sizeCounter).setText(mapString[2]);
+							break;
+						case Constants.PROPSTEP:
+							deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
+							if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+								configOld = true;
+							}
+							propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
+							if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[2])){
+								configOld = true;
+							}
+							smValueFieldDigList.get(sizeCounter).setText(mapString[3]);
+							medValueFieldDigList.get(sizeCounter).setText(mapString[4]);
+							bigValueFieldDigList.get(sizeCounter).setText(mapString[5]);	
+							break;
+					}
+				}
+				catch(NullPointerException npe){
+					configOld = true;
 				}
 				sizeCounter ++;
 			}
 		}
 		setApplied(true);
 		if(configOld){
-			int result = JOptionPane.showConfirmDialog(null, 
-					" Your configuration file does not fit your connected hardware. "
-					+ "\n Do you want to save your old configuration to a different file?"
-					+ "\n \n By pressing \"No\" you will overwrite your old configuration."
-					+ "\n By pressing \"Cancel\" you will ignore this message.",
-					"Old Configuration Conflict",
-					JOptionPane.YES_NO_CANCEL_OPTION);
-			if(result == JOptionPane.YES_OPTION){
-				int value = fmAR.showSaveDialog(ConfigGui.this);
-				if(value == JFileChooser.APPROVE_OPTION){
-					File file = fmAR.getSelectedFile();
-					fh.saveFile(map,file);
+			if(!isLoading){
+				int result = JOptionPane.showConfirmDialog(null, 
+						" Your configuration file does not fit your connected hardware. "
+						+ "\n Do you want to save your old configuration to a different file?"
+						+ "\n \n By pressing \"No\" you will overwrite your old configuration."
+						+ "\n By pressing \"Cancel\" you will ignore this message.",
+						"Old Configuration Conflict",
+						JOptionPane.YES_NO_CANCEL_OPTION);
+				if(result == JOptionPane.YES_OPTION){
+					int value = fmAR.showSaveDialog(ConfigGui.this);
+					if(value == JFileChooser.APPROVE_OPTION){
+						File file = fmAR.getSelectedFile();
+						fh.saveFile(map,file);
+						newConfig();
+					}
+				}
+				if(result == JOptionPane.NO_OPTION){
 					newConfig();
 				}
 			}
-			if(result == JOptionPane.NO_OPTION){
-				newConfig();
+			if(isLoading){
+				JOptionPane.showMessageDialog(null, "Your configuration "
+						+ "is not compatible with your connected hardware. "
+						+ "\nThis may cause unexpected configuration entries.",
+						"Warning!",JOptionPane.OK_OPTION);
+				isLoading = false;
 			}
 			setApplied(false);
 		}

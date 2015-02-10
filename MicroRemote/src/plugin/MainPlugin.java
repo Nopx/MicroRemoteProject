@@ -216,8 +216,7 @@ public class MainPlugin implements MMPlugin {
 		gui_.refreshGUI();
 	}
 
-	public void goDownConfig(String label) {
-		try{
+	public void goDownConfig(String label) {try{
 			String[] configs = core_.getAvailableConfigs(label).toArray();
 			String currentConfig = "";
 			try {
@@ -225,20 +224,32 @@ public class MainPlugin implements MMPlugin {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			int configIndex = -3;
-			for (int i = 0; i < configs.length; i++) {
-				if (configs[i].equals(currentConfig)) {
-					configIndex = i;
-					break;
+			if(currentConfig == null || currentConfig.equals("")){
+				try{
+					currentConfig = lastConfiguration.get(label);
+				}
+				catch(Exception e){
 				}
 			}
-			// If out of bounds
-			configIndex--;
-			if (configIndex == -1) {
-				configIndex = configs.length - 1;
+			int configIndex = -3;
+			if(currentConfig == null || currentConfig.equals("")){
+				configIndex = 0;
 			}
-	
+			else{
+				for (int i = 0; i < configs.length; i++) {
+					if (configs[i].equals(currentConfig)) {
+						configIndex = i;
+						break;
+					}
+				}
+				// If out of bounds
+				configIndex--;
+			}
+			if (configIndex < 0) {
+				configIndex = configs.length-1;
+			}
 			try {
+				lastConfiguration.put(label, configs[configIndex]);
 				core_.setConfig(label, configs[configIndex]);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -375,7 +386,14 @@ public class MainPlugin implements MMPlugin {
 			}
 			String[] mapString = map.get(key);
 			boolean contains = false;
-			switch(Integer.parseInt(mapString[0])){
+			int swInt;
+			try{
+				swInt = Integer.parseInt(mapString[0]);
+			}
+			catch(Exception e){
+				swInt = -1;
+			}
+			switch(swInt){
 					
 				case Constants.CERTAINCHANNEL:
 					for(int i = 0; i < configGroups.length; i++){
