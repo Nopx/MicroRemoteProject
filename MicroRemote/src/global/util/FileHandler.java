@@ -20,7 +20,7 @@
 package global.util;
 
 import global.meta.Constants;
-import global.util.ErrorPopup;
+import global.windows.ArdWindow;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 
 public class FileHandler {
 
@@ -70,14 +72,18 @@ public class FileHandler {
 			objIps.close();
 		} 
 		catch(ClassNotFoundException e){
-			ErrorPopup error = new ErrorPopup("Invalid or broken file");
-			error.setVisible(true);
+			JOptionPane.showMessageDialog(null, 
+					"Invalid or broken file",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
 			objIps.close();
 			throw(e);
 		}
 		catch(ClassCastException e){
-			ErrorPopup error = new ErrorPopup("Invalid or broken file");
-			error.setVisible(true);
+			JOptionPane.showMessageDialog(null, 
+					"Invalid or broken file",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
 			throw(e);
 		}
 		catch (Exception e) {

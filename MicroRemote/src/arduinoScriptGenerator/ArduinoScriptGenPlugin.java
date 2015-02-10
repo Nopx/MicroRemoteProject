@@ -21,7 +21,7 @@ package arduinoScriptGenerator;
 
 import global.meta.Constants;
 import global.util.StartChecker;
-import global.util.StartErrorDialog;
+import global.windows.StartErrorDialog;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;

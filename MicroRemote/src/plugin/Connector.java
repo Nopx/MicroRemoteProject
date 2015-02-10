@@ -20,14 +20,16 @@
 package plugin;
 
 import global.meta.Constants;
-import global.util.ArdWindow;
 import global.util.FileHandler;
 import global.util.LogStreamer;
+import global.windows.ArdWindow;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JOptionPane;
 
 public class Connector implements Observer {
 
@@ -48,14 +50,28 @@ public class Connector implements Observer {
 	public Connector(MainPlugin mm) {
 		initTimeSaver = System.currentTimeMillis();
 		microManager = mm;
-		reload();
+		//TODO remove if ok
+//		reload();
 	}
 	
 	public void reload(){
 		FileHandler fh = new FileHandler();
 		try {
 			map = fh.loadFile(new File(Constants.CONFFILENAME));
+			if(!microManager.validateMap(map)){
+				JOptionPane.showMessageDialog(null, 
+						" Your configuration does not fit your hardware. \n Please change your configuration",
+						" Configuration Old",
+						JOptionPane.ERROR_MESSAGE);
+				microManager.dispose();
+			}
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, 
+					" You have no configuration file. Nothing will happen! "
+					+ "\n To change this, click on \"Configuration\" next to "
+					+ "\"MicroRemote\" in the plugins-menu.",
+					" No Configuration",
+					JOptionPane.ERROR_MESSAGE);
 			map = new HashMap<Integer,String[]>();
 		}
 	}

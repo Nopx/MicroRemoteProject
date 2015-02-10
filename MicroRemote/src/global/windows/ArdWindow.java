@@ -17,7 +17,9 @@
  *  the MicroRemote project.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package global.util;
+package global.windows;
+
+import global.util.TextAreaPrintStream;
 
 import java.awt.BorderLayout;
 

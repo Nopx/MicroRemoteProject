@@ -17,7 +17,7 @@
  *  the MicroRemote project.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package global.util;
+package global.windows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -25,49 +25,46 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.Color;
+import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import net.miginfocom.swing.MigLayout;
-
-public class ErrorPopup extends JDialog {
+public class StartErrorDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-
-	public ErrorPopup(String message) {
-		setTitle("Information");
-		setBounds(100, 100, 291, 252);
+	
+	public StartErrorDialog() {
+		setBounds(100, 100, 354, 123);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		{
-			JTextPane errorText = new JTextPane();
-			errorText.setEditable(false);
-			errorText.setBackground(Color.WHITE);
-			errorText.setForeground(Color.BLACK);
-			errorText.setText(message);
-			contentPanel.add(errorText, "cell 0 0,growx,growy");
+			JLabel lblOnlyOnePart = new JLabel("Only one part of the MicroRemote plugin ");
+			contentPanel.add(lblOnlyOnePart);
+		}
+		{
+			JLabel lblCanBeOpen = new JLabel("can be open at the same time");
+			contentPanel.add(lblCanBeOpen);
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
-					public void mouseClicked(MouseEvent e) {
-						dispose();
+					public void mouseClicked(MouseEvent arg0) {
+						JButton b = (JButton)arg0.getSource();
+						StartErrorDialog w = (StartErrorDialog)SwingUtilities.getRoot(b);
+						w.dispose();
 					}
 				});
-				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}

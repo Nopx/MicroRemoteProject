@@ -21,10 +21,9 @@ package config;
 
 import global.meta.ConfigGUIInterface;
 import global.meta.Constants;
-import global.util.ArdWindow;
-import global.util.ErrorPopup;
 import global.util.FileHandler;
 import global.util.ScriptInterfaceWrapper;
+import global.windows.ArdWindow;
 import gnu.io.CommPortIdentifier;
 
 import javax.swing.AbstractAction;
@@ -35,6 +34,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -558,6 +558,7 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 	}
 	
 	private void guiToMap(){
+		boolean configOld = false;
 		newConfig();
 		int size =0;
 		int sizeCounter = 0;
@@ -599,19 +600,36 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 				switch(Integer.parseInt(mapString[0])){
 					case Constants.CERTAINCHANNEL:
 						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
+						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
+						if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						break;
 					case Constants.CERTAINPROP:
 						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
+						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
+						if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						smValueFieldDigList.get(sizeCounter).setText(mapString[3]);		
 						break;
 					case Constants.CHANNELMINUS:
-						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
+						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);	
+						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						break;
 					case Constants.CHANNELPLUS:
 						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
-						
+						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						break;
 					case Constants.FUNCTION:
 						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);		
@@ -619,7 +637,13 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 						break;
 					case Constants.PROPSTEP:
 						deviceGroupFunctionBoxDigList.get(sizeCounter).setSelectedItem(mapString[1]);
+						if(!deviceGroupFunctionBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							configOld = true;
+						}
 						propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
+						if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[2])){
+							configOld = true;
+						}
 						smValueFieldDigList.get(sizeCounter).setText(mapString[3]);
 						medValueFieldDigList.get(sizeCounter).setText(mapString[4]);
 						bigValueFieldDigList.get(sizeCounter).setText(mapString[5]);	
@@ -629,9 +653,31 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 			}
 		}
 		setApplied(true);
+		if(configOld){
+			int result = JOptionPane.showConfirmDialog(null, 
+					" Your configuration file does not fit your connected hardware. "
+					+ "\n Do you want to save your old configuration to a different file?"
+					+ "\n \n By pressing \"No\" you will overwrite your old configuration."
+					+ "\n By pressing \"Cancel\" you will ignore this message.",
+					"Old Configuration Conflict",
+					JOptionPane.YES_NO_CANCEL_OPTION);
+			if(result == JOptionPane.YES_OPTION){
+				int value = fmAR.showSaveDialog(ConfigGui.this);
+				if(value == JFileChooser.APPROVE_OPTION){
+					File file = fmAR.getSelectedFile();
+					fh.saveFile(map,file);
+					newConfig();
+				}
+			}
+			if(result == JOptionPane.NO_OPTION){
+				newConfig();
+			}
+			setApplied(false);
+		}
 		
 		
 	}
+	
 	
 	
 	
@@ -721,9 +767,7 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 							.getText());
 				} catch (Exception e) {
 					valid = false;
-					ErrorPopup errorPropStep = new ErrorPopup(
-							"Your step values have to be numbers.");
-					errorPropStep.setVisible(true);
+					errorString +="\n-Your step values have to be numbers.";
 				}
 				if (valid) {
 					mapString = new String[] { "" + method, device,
@@ -753,8 +797,10 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 			}
 		}
 		if(errorString.length() >0){
-			ErrorPopup errorCertProp = new ErrorPopup(errorString);
-			errorCertProp.setVisible(true);
+			JOptionPane.showMessageDialog(null, 
+					errorString,
+					"Invalid Values",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		else{
 			fh.saveFile(map,new File(Constants.CONFFILENAME));

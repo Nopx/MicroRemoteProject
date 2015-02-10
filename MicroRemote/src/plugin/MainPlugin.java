@@ -20,13 +20,13 @@
 package plugin;
 
 import global.meta.Constants;
-import global.util.ArdWindow;
 import global.util.Driver;
 import global.util.FileHandler;
 import global.util.LogStreamer;
 import global.util.ScriptInterfaceWrapper;
 import global.util.StartChecker;
-import global.util.StartErrorDialog;
+import global.windows.ArdWindow;
+import global.windows.StartErrorDialog;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -171,25 +171,61 @@ public class MainPlugin implements MMPlugin {
 	}
 
 	public void goUpConfig(String label) {
-		String[] configs = core_.getAvailableConfigs(label).toArray();
-		String currentConfig = "";
-		try {
-			currentConfig = core_.getCurrentConfig(label);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(currentConfig == null || currentConfig.equals("")){
-			try{
-				currentConfig = lastConfiguration.get(label);
+		try{
+			String[] configs = core_.getAvailableConfigs(label).toArray();
+			String currentConfig = "";
+			try {
+				currentConfig = core_.getCurrentConfig(label);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			catch(Exception e){
+			if(currentConfig == null || currentConfig.equals("")){
+				try{
+					currentConfig = lastConfiguration.get(label);
+				}
+				catch(Exception e){
+				}
+			}
+			int configIndex = -3;
+			if(currentConfig == null || currentConfig.equals("")){
+				configIndex = 0;
+			}
+			else{
+				for (int i = 0; i < configs.length; i++) {
+					if (configs[i].equals(currentConfig)) {
+						configIndex = i;
+						break;
+					}
+				}
+				// If out of bounds
+				configIndex++;
+			}
+			if (configIndex == configs.length) {
+				configIndex = 0;
+			}
+			try {
+				lastConfiguration.put(label, configs[configIndex]);
+				core_.setConfig(label, configs[configIndex]);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		int configIndex = -3;
-		if(currentConfig == null || currentConfig.equals("")){
-			configIndex = 0;
+		catch(Exception e){
+			
 		}
-		else{
+		gui_.refreshGUI();
+	}
+
+	public void goDownConfig(String label) {
+		try{
+			String[] configs = core_.getAvailableConfigs(label).toArray();
+			String currentConfig = "";
+			try {
+				currentConfig = core_.getCurrentConfig(label);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			int configIndex = -3;
 			for (int i = 0; i < configs.length; i++) {
 				if (configs[i].equals(currentConfig)) {
 					configIndex = i;
@@ -197,45 +233,19 @@ public class MainPlugin implements MMPlugin {
 				}
 			}
 			// If out of bounds
-			configIndex++;
-		}
-		if (configIndex == configs.length) {
-			configIndex = 0;
-		}
-		try {
-			lastConfiguration.put(label, configs[configIndex]);
-			core_.setConfig(label, configs[configIndex]);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		gui_.refreshGUI();
-	}
-
-	public void goDownConfig(String label) {
-		String[] configs = core_.getAvailableConfigs(label).toArray();
-		String currentConfig = "";
-		try {
-			currentConfig = core_.getCurrentConfig(label);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		int configIndex = -3;
-		for (int i = 0; i < configs.length; i++) {
-			if (configs[i].equals(currentConfig)) {
-				configIndex = i;
-				break;
+			configIndex--;
+			if (configIndex == -1) {
+				configIndex = configs.length - 1;
+			}
+	
+			try {
+				core_.setConfig(label, configs[configIndex]);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		// If out of bounds
-		configIndex--;
-		if (configIndex == -1) {
-			configIndex = configs.length - 1;
-		}
-
-		try {
-			core_.setConfig(label, configs[configIndex]);
-		} catch (Exception e) {
-			e.printStackTrace();
+		catch(Exception e){
+			
 		}
 		gui_.refreshGUI();
 	}
@@ -348,6 +358,69 @@ public class MainPlugin implements MMPlugin {
 
 	public String getCopyright() {
 		return "Bernard Jollans, 2014";
+	}
+
+	public boolean validateMap(HashMap<Integer, String[]> map) {
+		boolean ret = true;
+		String[] configGroups = core_.getAvailableConfigGroups().toArray();
+		String[] devices = {};
+		try {
+			devices = core_.getDeviceAdapterNames().toArray();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		for(Integer key: map.keySet()){
+			if(!ret){
+				return ret;
+			}
+			String[] mapString = map.get(key);
+			boolean contains = false;
+			switch(Integer.parseInt(mapString[0])){
+					
+				case Constants.CERTAINCHANNEL:
+					for(int i = 0; i < configGroups.length; i++){
+						String[] presets = core_.getAvailableConfigs(configGroups[i]).toArray();
+						for(int j = 0; j <presets.length; j++){
+							if(contains){
+								break;
+							}
+							contains = presets[i].equals(mapString[2]);
+						}
+					}
+				case Constants.CHANNELMINUS:
+				case Constants.CHANNELPLUS:
+					for(int i = 0; i < configGroups.length; i++){
+						if(contains){
+							break;
+						}
+						contains = configGroups[i].equals(mapString[1]);
+					}
+					ret = contains;
+					break;
+				case Constants.CERTAINPROP:
+				case Constants.PROPSTEP:
+					for(int i = 0; i < devices.length; i++){
+						if(contains){
+							break;
+						}
+						contains = devices[i].equals(mapString[1]);
+					}
+					ret = contains;
+					for(int i = 0; i < devices.length; i++){
+						if(contains){
+							break;
+						}
+						try {
+							contains = core_.hasProperty(mapString[1], mapString[2]);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					break;
+			}
+		}
+		
+		return ret;
 	}
 
 	

@@ -18,6 +18,8 @@
  */
 
 package global.util;
+import global.windows.ArdWindow;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

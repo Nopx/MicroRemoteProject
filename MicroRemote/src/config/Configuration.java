@@ -20,14 +20,14 @@
 package config;
 
 import global.meta.Constants;
-import global.util.ArdWindow;
 import global.util.Driver;
 import global.util.FileHandler;
 import global.util.IPgetter;
 import global.util.LogStreamer;
 import global.util.ScriptInterfaceWrapper;
 import global.util.StartChecker;
-import global.util.StartErrorDialog;
+import global.windows.ArdWindow;
+import global.windows.StartErrorDialog;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

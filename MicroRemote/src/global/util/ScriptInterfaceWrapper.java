@@ -19,9 +19,10 @@
 
 package global.util;
 
-import global.util.ErrorPopup;
 
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import mmcorej.StrVector;
 
@@ -160,8 +161,10 @@ public class ScriptInterfaceWrapper {
 			core_.getProperty(label, propName);
 			return true;
 		} catch (Exception e) {
-			new ErrorPopup(e.getMessage()).setVisible(true);
-			;
+			JOptionPane.showMessageDialog(null, 
+					e.getMessage(),
+					"ERROR",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 	}
