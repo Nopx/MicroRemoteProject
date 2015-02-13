@@ -617,7 +617,7 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 								configOld = true;
 							}
 							propChanBoxDigList.get(sizeCounter).setSelectedItem(mapString[2]);
-							if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[1])){
+							if(!propChanBoxDigList.get(sizeCounter).getSelectedItem().equals(mapString[2])){
 								configOld = true;
 							}
 							smValueFieldDigList.get(sizeCounter).setText(mapString[3]);		
