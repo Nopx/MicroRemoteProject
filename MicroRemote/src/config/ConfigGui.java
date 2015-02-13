@@ -979,19 +979,14 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 				}
 				String selectedMethod = (String) methodBoxDigList.get(index)
 						.getSelectedItem();
-				if (selectedMethod.equals("Certain Prop")
-						|| selectedMethod.equals("Prop Step")) {
+				if (selectedMethod.equals(Constants.MEtHODPROPCERTAIN)) {
 					try {
-						if (selectedMethod.equals("Certain Prop"))
 							propORchannel = ScriptInterfaceWrapper
 									.getDevicePropertyNames(deviceORgroup);
-						else
-							propORchannel = ScriptInterfaceWrapper
-									.getDeviceNumberPropertyNames(deviceORgroup);
 					} catch (Exception e) {
 						propORchannel = new String[] {};
 					}
-				} else if(selectedMethod.equals("Function")){
+				} else if(selectedMethod.equals(Constants.METHODFUNCTION)){
 
 					propChanBoxDigList.get(index).setVisible(false);
 					propChanBoxDigList.get(index).setEnabled(false);
