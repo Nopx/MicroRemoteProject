@@ -11,4 +11,5 @@
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="config.Configuration"/>
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+<fullyQualifiedTypeName name="global.util.ScriptInterfaceWrapper"/>
 </qualifiedTypeNameHistroy>
