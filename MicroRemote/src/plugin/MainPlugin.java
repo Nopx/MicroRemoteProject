@@ -376,7 +376,7 @@ public class MainPlugin implements MMPlugin {
 		String[] configGroups = core_.getAvailableConfigGroups().toArray();
 		String[] devices = {};
 		try {
-			devices = core_.getDeviceAdapterNames().toArray();
+			devices = ScriptInterfaceWrapper.getDeviceNames();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
