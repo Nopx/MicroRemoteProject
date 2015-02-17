@@ -165,7 +165,15 @@ public class Connector implements Observer {
 						LogStreamer.write(e.getMessage() + "\n");
 					}
 					microManager.executeBsh(script);*/
-					microManager.executeBsh("source("+file.getAbsolutePath()+");");
+					String s = "\""+file.getAbsolutePath()+"\");";
+					
+					//Change backslashes to slashes in String
+					String[] arr = s.split("\\\\");
+					s = "source("+arr[0];
+					for(int i = 0; i < arr.length-1; i++){
+						s+= "/"+arr[i+1]; 
+					}
+					microManager.executeBsh(s);
 				}
 				if (function.toLowerCase().equals(Constants.FUNCTIONSTRINGSHUTTER)) {
 					microManager.toggleShutter();
