@@ -48,7 +48,6 @@ import org.micromanager.api.ScriptInterface;
 
 import drivers.AndroidDriver;
 import drivers.ArduinoDriver;
-import drivers.SimpleInsecureTCPDriver;
 
 public class Configuration implements MMPlugin, Observer {
 	
@@ -162,9 +161,6 @@ public class Configuration implements MMPlugin, Observer {
 		}
 		else if(driverString.equals(Constants.DRIVERLIST[1])){
 			driver = new ArduinoDriver(map.get(-1).equals(Constants.DETECTKEYWORD));
-		}
-		else if(driverString.equals(Constants.DRIVERLIST[2])){
-			driver = new SimpleInsecureTCPDriver();
 		}
 		else
 			driver = new AndroidDriver();
