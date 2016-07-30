@@ -55,7 +55,7 @@ public class Constants {
 	public static final String WORKINGDIR = System.getProperty("user.dir");
 	public static final String BSHDIR = System.getProperty("user.dir")+"/plugins/Micro-Manager";
 
-	public static final String[] DRIVERLIST = {"Android","Arduino","PlainTCP"};
+	public static final String[] DRIVERLIST = {"Android","Arduino"};
 	
 	public static final String DETECTKEYWORD = "Auto Detect";
 	

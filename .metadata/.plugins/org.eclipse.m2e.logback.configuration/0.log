@@ -46,3 +46,4 @@ Caused by: java.net.SocketTimeoutException: connect timed out
 	at org.apache.commons.httpclient.protocol.ReflectionSocketFactory.createSocket(ReflectionSocketFactory.java:140) ~[na:na]
 	... 25 common frames omitted
 2016-07-30 10:46:17,311 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-07-30 14:41:01,495 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.

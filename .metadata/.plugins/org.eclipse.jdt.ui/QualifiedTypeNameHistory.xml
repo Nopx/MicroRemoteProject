@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="java.io.DataInputStream"/>
 <fullyQualifiedTypeName name="global.util.PasswGen"/>
 <fullyQualifiedTypeName name="global.util.CryptUtil"/>
-<fullyQualifiedTypeName name="global.meta.Constants"/>
 <fullyQualifiedTypeName name="javax.swing.JDialog"/>
 <fullyQualifiedTypeName name="global.windows.ConfigOldDialog"/>
 <fullyQualifiedTypeName name="global.windows.ErrorPopup"/>
@@ -12,4 +11,6 @@
 <fullyQualifiedTypeName name="config.Configuration"/>
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 <fullyQualifiedTypeName name="global.util.ScriptInterfaceWrapper"/>
+<fullyQualifiedTypeName name="global.meta.Constants"/>
+<fullyQualifiedTypeName name="drivers.SimpleInsecureTCPDriver"/>
 </qualifiedTypeNameHistroy>

@@ -263,7 +263,6 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 		
 	};
 
-	@SuppressWarnings("unchecked")
 	public ConfigGui() {
 		map = new HashMap<Integer, String[]>();
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -844,7 +843,6 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 		}
 	}*/
 	
-	@SuppressWarnings("unchecked")
 	public void addNewLine(){
 		//methodBox
 		

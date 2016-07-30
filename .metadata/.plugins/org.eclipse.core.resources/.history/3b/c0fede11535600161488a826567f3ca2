@@ -263,7 +263,6 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 		
 	};
 
-	@SuppressWarnings("unchecked")
 	public ConfigGui() {
 		map = new HashMap<Integer, String[]>();
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -396,6 +395,7 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 		portLabel = new JLabel(PORTLABELTEXT);
 		panel.add(portLabel,"cell 8 0");
 		{
+			@SuppressWarnings("rawtypes")
 			Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
 			ArrayList<String> portIDs = new ArrayList<String>();
 			portIDs.add(Constants.DETECTKEYWORD);
@@ -844,7 +844,6 @@ public class ConfigGui extends JFrame implements ConfigGUIInterface{
 		}
 	}*/
 	
-	@SuppressWarnings("unchecked")
 	public void addNewLine(){
 		//methodBox
 		

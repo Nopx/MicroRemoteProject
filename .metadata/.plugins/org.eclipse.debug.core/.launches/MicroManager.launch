@@ -9,5 +9,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ij.ImageJ"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="MicroRemote"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="C:\Program Files\Micro-Manager-1.4"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="B:\Develop\Java\MicroRemote\Micro-Manager-1.4"/>
 </launchConfiguration>
