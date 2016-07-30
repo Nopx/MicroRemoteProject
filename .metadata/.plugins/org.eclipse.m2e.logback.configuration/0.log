@@ -45,3 +45,4 @@ Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.lang.reflect.Method.invoke(Unknown Source) ~[na:1.7.0_21]
 	at org.apache.commons.httpclient.protocol.ReflectionSocketFactory.createSocket(ReflectionSocketFactory.java:140) ~[na:na]
 	... 25 common frames omitted
+2016-07-30 10:46:17,311 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
